@@ -111,7 +111,6 @@ def DrawMoney(AccountID:str, Amount:int):
             'result': 400,
             'reason': str(DrawMoneyCheck['reason'])
         }
-<<<<<<< HEAD
 def Transfer(fromID:str, toID:str, Amount:int):
     TransferCheck=Check.TransferCheck(fromID=fromID, toID=toID, Amount=Amount)
     if TransferCheck['result']=='Pass':
@@ -220,5 +219,3 @@ class GetUser:
             'branchname':BranchName,
             'about':AboutTheUser
         }
-=======
->>>>>>> 70b47a5eb7f27d48a8c19483569faf4ba502f9a9
