@@ -109,4 +109,3 @@ def DrawMoney(AccountID:str, Amount:int):
             'result': 400,
             'reason': str(DrawMoneyCheck['reason'])
         }
-print(DrawMoney("999", 200))
