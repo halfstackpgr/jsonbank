@@ -74,7 +74,7 @@ class Update:
                 "now": NewAmount,
                 "result": 200
             }
-    def transfer(fromID:str, toID:str, Amount):
+    def transfer(fromID:str, toID:str, Amount:int):
         
         
         """
@@ -90,7 +90,7 @@ class Update:
         ```
         
         """
-        Update.drawmoney(AccountID=fromID, AmountToWithdraw=Amount)
+        Update.drawmoney(AccountID=fromID, AmountToWithDraw=Amount)
         Update.addmoney(AccountID=toID, AmountToAdd=Amount)
         return {
             'comment':f'Trasnfer of {Amount} from the ID {fromID} to the ID {toID}, was sucessfull !',

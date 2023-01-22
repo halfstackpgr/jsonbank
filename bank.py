@@ -1,8 +1,10 @@
 import json
 import datamanagers.converters
 import datamanagers.updaters
+import datamanagers.get
 import modals.pricepool
 import modals.checks
+from datamanagers.get import UserGet, BankGet
 from datamanagers.converters import Converters, AllResults
 from datamanagers.updaters import Update
 from modals.checks import Check
@@ -35,8 +37,8 @@ def CreateAccount(
                     {
                     "AccountName": AccountName,
                     "AccountID": AccountID,
-                    "CreatedGuildName": BranchName,
-                    "CreatedGuildID": BranchID,
+                    "BranchName": BranchName,
+                    "BranchID": BranchID,
                     "Balance": Balance,
                     "About": About
                     }
@@ -99,7 +101,7 @@ def DrawMoney(AccountID:str, Amount:int):
         }
     if DrawMoneyCheck['result']=='Fail':
         return{
-            'comment': "Amount Could Not Be Drawn from the account! !",
+            'comment': "Amount Could Not Be Drawn from the account!",
             'result': 400,
             'reason': str(DrawMoneyCheck['reason'])
         }
@@ -109,4 +111,111 @@ def DrawMoney(AccountID:str, Amount:int):
             'result': 400,
             'reason': str(DrawMoneyCheck['reason'])
         }
-print(DrawMoney("999", 200))
+def Transfer(fromID:str, toID:str, Amount:int):
+    TransferCheck=Check.TransferCheck(fromID=fromID, toID=toID, Amount=Amount)
+    if TransferCheck['result']=='Pass':
+        Update.transfer(fromID=fromID, toID=toID, Amount=Amount)
+        return{
+            'comment': "Amount has been successfully transferred !",
+            'result': 200,
+            'reason': str(TransferCheck['reason'])
+        }
+    if TransferCheck['result']=='Fail':
+        return{
+            'comment': "Amount Could Not Be transfered from the account!",
+            'result': 400,
+            'reason': str(TransferCheck['reason'])
+        }
+    else:
+        return{
+            'comment': "Unknown Error While Processing Request!",
+            'result': 400,
+            'reason': str(TransferCheck['reason'])
+        }
+
+class GetUser:
+    def balance(AccountID:str):
+        CheckAccount=Check.AccountExistence(AccountID=AccountID)
+        if CheckAccount['result']=='Pass':
+            balance=UserGet.UserBalance(AccountID=AccountID)["balance"]
+            return{
+                'balance': Converters.StandardFormat(balance),
+                'balanceInWords': Converters.NumberToWords(balance),
+                'comment': f"The Balance for the account {AccountID} is {balance}",
+                'result': 200
+            }
+        if CheckAccount['result']=='Fail':
+            return{
+                'result':400,
+                'comment':'Account Not Found!'
+            }
+    def name(AccountID:str):
+        CheckAccount=Check.AccountExistence(AccountID=AccountID)
+        if CheckAccount['result']=='Pass':
+            NameUser=UserGet.AccountName(AccountID=AccountID)["name"]
+            return{
+                'name': str(NameUser).title(),
+                'comment': f"The name for the account {AccountID} is {NameUser}",
+                'result': 200
+            }
+        if CheckAccount['result']=='Fail':
+            return{
+                'result':400,
+                'comment':'Account Not Found!'
+            }
+
+    def branchname(AccountID:str):
+        CheckAccount=Check.AccountExistence(AccountID=AccountID)
+        if CheckAccount['result']=='Pass':
+            NameBranch=UserGet.BranchName(AccountID=AccountID)["branchname"]
+            return{
+                'branchname': str(NameBranch).title(),
+                'comment': f"The Branch Name for the account {AccountID} is {NameBranch}",
+                'result': 200
+            }
+        if CheckAccount['result']=='Fail':
+            return{
+                'result':400,
+                'comment':'Account Not Found!'
+            }
+    def branchid(AccountID:str):
+        CheckAccount=Check.AccountExistence(AccountID=AccountID)
+        if CheckAccount['result']=='Pass':
+            IDBranch=UserGet.BranchID(AccountID=AccountID)["branchid"]
+            return{
+                'branchid': int(IDBranch),
+                'comment': f"The Branch ID for the account {AccountID} is {IDBranch}",
+                'result': 200
+            }
+        if CheckAccount['result']=='Fail':
+            return{
+                'result':400,
+                'comment':'Account Not Found!'
+            }
+    def AboutUser(AccountID:str):
+        CheckAccount=Check.AccountExistence(AccountID=AccountID)
+        if CheckAccount['result']=='Pass':
+            AboutUser=UserGet.About(AccountID=AccountID)["about"]
+            return{
+                'about': str(AboutUser).title(),
+                'comment': f"About: {AboutUser}",
+                'result': 200
+            }
+        if CheckAccount['result']=='Fail':
+            return{
+                'result':400,
+                'comment':'Account Not Found!'
+            }
+    def all(AccountID:int):
+        Name=GetUser.name(AccountID=AccountID)['name']
+        ACID=AccountID
+        BranchID=GetUser.branchid(AccountID=AccountID)['branchid']
+        BranchName=GetUser.branchname(AccountID=AccountID)['branchname']
+        AboutTheUser=GetUser.AboutUser(AccountID=AccountID)['about'].title()
+        return{
+            'name':Name,
+            'a/cid':ACID,
+            'branchid':BranchID,
+            'branchname':BranchName,
+            'about':AboutTheUser
+        }

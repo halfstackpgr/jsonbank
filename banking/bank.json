@@ -3,30 +3,20 @@
     {
       "AccountName": "Default",
       "AccountID": "0",
-      "CreatedGuildName": "HalfStackPgr",
-      "CreatedGuildID": 0,
-      "Balance": 0,
+      "BranchName": "HalfStackPgr",
+      "BranchID": 200214,
+      "Balance": 5000,
       "About": "Account Created"
     }
   ],
   "999": [
     {
-      "AccountName": "Parth Mishra",
+      "AccountName": "Default",
       "AccountID": "999",
-      "CreatedGuildName": "The HalfStackPgr Banks",
-      "CreatedGuildID": 121.0,
-      "Balance": 5998,
-      "About": "Account Created"
-    }
-  ],
-  "666": [
-    {
-      "AccountName": "Parth Mishra",
-      "AccountID": "666",
-      "CreatedGuildName": "The HalfStackPgr Banks",
-      "CreatedGuildID": 121.0,
-      "Balance": 10,
-      "About": "Account Created"
+      "BranchName": "HalfStackPgr",
+      "BranchID": 0,
+      "Balance": 0,
+      "About": "The TOP G"
     }
   ]
 }
