@@ -1,0 +1,50 @@
+class UpdateUser:
+    def name(AccountID:str, NewName:str):
+        with open(BANK, "r") as file:
+            thebank = json.load(file)
+            WasName= thebank[str(AccountID)][0]["AccountName"]
+            thebank[str(AccountID)][0]["AccountName"] = str(NewName)
+            with open(BANK, "w") as file:
+                json.dump(thebank, file, indent=2)
+            return {
+                "was": str(WasName),
+                "now": str(NewName),
+                "result": 200
+            }
+    def branchname(AccountID:str, NewBranch:str):
+        with open(BANK, "r") as file:
+            thebank = json.load(file)
+            WasName= thebank[str(AccountID)][0]["BranchName"]
+            thebank[str(AccountID)][0]["BranchName"] = str(NewBranch)
+            with open(BANK, "w") as file:
+                json.dump(thebank, file, indent=2)
+            return {
+                "was": str(WasName),
+                "now": str(NewBranch),
+                "result": 200
+            }  
+    def branchid(AccountID:str, NewBranchID:int):
+        with open(BANK, "r") as file:
+            thebank = json.load(file)
+            WasID= thebank[str(AccountID)][0]["BranchID"]
+            thebank[str(AccountID)][0]["BranchID"] = NewBranchID
+            with open(BANK, "w") as file:
+                json.dump(thebank, file, indent=2)
+            return {
+                "was": WasID,
+                "now": NewBranchID,
+                "result": 200
+            }
+    
+    def about(AccountID:str, NewAbout:str):
+        with open(BANK, "r") as file:
+            thebank = json.load(file)
+            WasAbout= thebank[str(AccountID)][0]["About"]
+            thebank[str(AccountID)][0]["About"] = NewAbout
+            with open(BANK, "w") as file:
+                json.dump(thebank, file, indent=2)
+            return {
+                "was": WasAbout,
+                "now": NewAbout,
+                "result": 200
+            }

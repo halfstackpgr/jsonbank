@@ -39,10 +39,6 @@ class UserGet:
         return{
             'about':str(thebank[AccountID][0]["About"])
         }
-    
-        
-        
-
 
 class BankGet:
     def Balance():

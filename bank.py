@@ -6,10 +6,11 @@ import modals.pricepool
 import modals.checks
 from datamanagers.get import UserGet, BankGet
 from datamanagers.converters import Converters, AllResults
-from datamanagers.updaters import Update
+from datamanagers.updaters import Update, UpdateUser
 from modals.checks import Check
 from modals.pricepool import PricePool
-
+import sys
+sys.setrecursionlimit(1000)
 
 MaxLowerLimitVaule=0
 # PATHS:
@@ -207,15 +208,105 @@ class GetUser:
                 'comment':'Account Not Found!'
             }
     def all(AccountID:int):
-        Name=GetUser.name(AccountID=AccountID)['name']
-        ACID=AccountID
-        BranchID=GetUser.branchid(AccountID=AccountID)['branchid']
-        BranchName=GetUser.branchname(AccountID=AccountID)['branchname']
-        AboutTheUser=GetUser.AboutUser(AccountID=AccountID)['about'].title()
+        CheckAccount=Check.AccountExistence(AccountID=AccountID)
+        if CheckAccount['result']=='Pass':
+            Name=GetUser.name(AccountID=AccountID)['name']
+            ACID=AccountID
+            BranchID=GetUser.branchid(AccountID=AccountID)['branchid']
+            BranchName=GetUser.branchname(AccountID=AccountID)['branchname']
+            AboutTheUser=GetUser.AboutUser(AccountID=AccountID)['about'].title()
+            return{
+                'name':Name,
+                'a/cid':ACID,
+                'branchid':BranchID,
+                'branchname':BranchName,
+                'about':AboutTheUser
+            }
+        if CheckAccount['result']=='Fail':
+            return{
+                'result':400,
+                'comment':'Account Not Found!'
+            }
+class GetBank:
+    def SumOfBalace():
+        SumUp=BankGet.Balance()['balance']
         return{
-            'name':Name,
-            'a/cid':ACID,
-            'branchid':BranchID,
-            'branchname':BranchName,
-            'about':AboutTheUser
+            'balance': Converters.StandardFormat(int(SumUp)),
+            'balanceinwords': Converters.NumberToWords(int(SumUp))
         }
+    def NumOfAccounts():
+        Num=BankGet.Accounts()['accounts']
+        return{
+            'accounts': Converters.StandardFormat(int(Num)),
+            'accountsinwords': Converters.NumberToWords(int(Num))
+        }
+    def Pool():
+        PoolNum=BankGet.Pool()['balance']
+        return{
+            'maxpool': Converters.StandardFormat(int(PoolNum)),
+            'maxpoolinwords': Converters.NumberToWords(int(PoolNum))
+        }
+    def RemainingPool():
+        RemainingPool=BankGet.RemainingPool()['leftpool']
+        return{
+            'maxpool': Converters.StandardFormat(int(RemainingPool)),
+            'maxpoolinwords': Converters.NumberToWords(int(RemainingPool))
+        } 
+    
+class ChangeUser:
+    def name(AccountID:str, NewName:str):
+        AccountExistenceCheck=Check.AccountExistence(AccountID=AccountID)
+        if AccountExistenceCheck['result']=='Pass':
+            Change=UpdateUser.name(AccountID=AccountID, NewName=NewName)
+            return {
+                'was': str(Change['was']).title(),
+                'new': str(Change['now'].title()),
+                'result': 200
+            }
+        if AccountExistenceCheck['result']=='Fail':
+            return{
+                'result':400,
+                'comment':'Account Not Found!'
+            }
+    def branchname(AccountID:str, NewBranch:str):
+        AccountExistenceCheck=Check.AccountExistence(AccountID=AccountID)
+        if AccountExistenceCheck['result']=='Pass':
+            Change=UpdateUser.branchname(AccountID=AccountID, NewBranch=NewBranch)
+            return {
+                'was': str(Change['was']).title(),
+                'new': str(Change['now'].title()),
+                'result': 200
+            }
+        if AccountExistenceCheck['result']=='Fail':
+            return{
+                'result':400,
+                'comment':'Account Not Found!'
+            }
+    def branchid(AccountID:str, NewBranchID:str):
+        AccountExistenceCheck=Check.AccountExistence(AccountID=AccountID)
+        if AccountExistenceCheck['result']=='Pass':
+            Change=UpdateUser.branchid(AccountID=AccountID, NewBranchID=NewBranchID)
+            return {
+                'was': Change['was'],
+                'new': Change['now'],
+                'result': 200
+            }
+        if AccountExistenceCheck['result']=='Fail':
+            return{
+                'result':400,
+                'comment':'Account Not Found!'
+            }
+    def about(AccountID:str, NewAbout:str):
+        AccountExistenceCheck=Check.AccountExistence(AccountID=AccountID)
+        if AccountExistenceCheck['result']=='Pass':
+            Change=UpdateUser.about(AccountID=AccountID, NewAbout=NewAbout)
+            return {
+                'was': str(Change['was']).title(),
+                'new': str(Change['now'].title()),
+                'result': 200
+            }
+        if AccountExistenceCheck['result']=='Fail':
+            return{
+                'result':400,
+                'comment':'Account Not Found!'
+            }
