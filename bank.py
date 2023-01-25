@@ -452,7 +452,7 @@ class GetUser:
         Source:
         
         
-        
+        ```python
         CheckAccount=Check.AccountExistence(AccountID=AccountID)
         if CheckAccount['result']=='Pass':
             Name=GetUser.name(AccountID=AccountID)['name']
@@ -465,7 +465,9 @@ class GetUser:
                 'a/cid':ACID,
                 'branchid':BranchID,
                 'branchname':BranchName,
-                'about':AboutTheUser
+                'about':AboutTheUser,
+                'result': 200,
+                'comment': "Bank Got The Details Successfullly!"
             }
         if CheckAccount['result']=='Fail':
             return{
@@ -473,7 +475,7 @@ class GetUser:
                 'comment':'Account Not Found!'
             }
 
-        
+        ```
         """
         CheckAccount=Check.AccountExistence(AccountID=AccountID)
         if CheckAccount['result']=='Pass':
@@ -487,7 +489,9 @@ class GetUser:
                 'a/cid':ACID,
                 'branchid':BranchID,
                 'branchname':BranchName,
-                'about':AboutTheUser
+                'about':AboutTheUser,
+                'result': 200,
+                'comment': "Bank Got The Details Successfullly!"
             }
         if CheckAccount['result']=='Fail':
             return{
@@ -591,7 +595,8 @@ class ChangeUser:
             return {
                 'was': str(Change['was']).title(),
                 'new': str(Change['now'].title()),
-                'result': 200
+                'result': 200,
+                'comment':'Request was sucessfull'
             }
         if AccountExistenceCheck['result']=='Fail':
             return{
@@ -606,7 +611,9 @@ class ChangeUser:
             return {
                 'was': str(Change['was']).title(),
                 'new': str(Change['now'].title()),
-                'result': 200
+                'result': 200,
+                'comment':'Request was sucessfull'
+                
             }
         if AccountExistenceCheck['result']=='Fail':
             return{
@@ -627,12 +634,13 @@ class ChangeUser:
             return {
                 'was': str(Change['was']).title(),
                 'new': str(Change['now'].title()),
-                'result': 200
+                'result': 200,
+                'comment':'Request was sucessfull'
             }
         if AccountExistenceCheck['result']=='Fail':
             return{
                 'result':400,
-                'comment':'Account Not Found!'
+                'comment':'Account Not Found!',
             }
         ```
         
@@ -643,7 +651,8 @@ class ChangeUser:
             return {
                 'was': str(Change['was']).title(),
                 'new': str(Change['now'].title()),
-                'result': 200
+                'result': 200,
+                'comment':'Request was sucessfull',
             }
         if AccountExistenceCheck['result']=='Fail':
             return{
@@ -669,7 +678,8 @@ class ChangeUser:
         if AccountExistenceCheck['result']=='Fail':
             return{
                 'result':400,
-                'comment':'Account Not Found!'
+                'comment':'Account Not Found!',
+                'comment':'Request was sucessfull'
             }
         ```
             
@@ -680,7 +690,8 @@ class ChangeUser:
             return {
                 'was': Change['was'],
                 'new': Change['now'],
-                'result': 200
+                'result': 200,
+                'comment':'Request was sucessfull'
             }
         if AccountExistenceCheck['result']=='Fail':
             return{
@@ -699,7 +710,8 @@ class ChangeUser:
             return {
                 'was': str(Change['was']).title(),
                 'new': str(Change['now'].title()),
-                'result': 200
+                'result': 200,
+                'comment':'Request was sucessfull'
             }
         if AccountExistenceCheck['result']=='Fail':
             return{
@@ -715,7 +727,8 @@ class ChangeUser:
             return {
                 'was': str(Change['was']).title(),
                 'new': str(Change['now'].title()),
-                'result': 200
+                'result': 200,
+                'comment':'Request was sucessfull'
             }
         if AccountExistenceCheck['result']=='Fail':
             return{
