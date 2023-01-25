@@ -17,11 +17,11 @@ pip install hikari-lightbulb
 
 > This library right now, is in the best stable stage with all the "Source" docstrings attached to it. The Bank.py returns two request codes with comment or result. They are 
 
-**200** *for every successfull attempt using a function*
+`200` *for every successfull attempt using a function*
 
 **and**
 
-**400** *for every unsucessfull attempt using a function*
+`400` *for every unsucessfull attempt using a function*
 
 
 Some Upcoming Features and already added features:
