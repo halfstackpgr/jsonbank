@@ -1,5 +1,5 @@
 import json
-from modals.pricepool import PricePool
+from .pricepool import PricePool
 # Limits
 MaxLowerLimitVaule=0
 # PATHS:
