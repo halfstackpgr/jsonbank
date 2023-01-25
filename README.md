@@ -1,64 +1,37 @@
 ### JSON BANK
 A random brain stormed Idea I got after experimenting with Hikari and Lightbulb to make discord bots. 
 ```python
-print("Welcome to Your Very Own Economy Bot Data Handler System.")
+print("Welcome To JSON Bank !")
 ```
 <div align="center">
     <img src="https://cdn-wordpress-info.futurelearn.com/wp-content/uploads/how-does-the-economy-work-606x303.jpg.webp">
 </div>
 
-*The idea was to build an economy bot for my server which turned to making a handler, which is now I am making avilable to public so that they can use it as well, to personalise their own bot.*
+*This idea happened to strike my brain when I was trying to figure out a way to make an Economy Bot, but I am lazy enough not to learn operational databases, and hence I decided to make it using JSONs, now the idea was limited to make a bot for my server, but instead I made a library so that everyone can use it. Making their own Economy Bots*
 
 
 Tested with:
 ```python
 pip install hikari-lightbulb
 ```
->This library is not even in testing stage, neither I claim it to be in, I am just experementing with my kowledge. + This library won't be much of a benefit if you are building a commerical bot for like 10,000+ people. Since It requires local storage. 
+
+> This library right now, is in the best stable stage with all the "Source" docstrings attached to it. The Bank.py returns two request codes with comment or result. They are 
+**200** *for every successfull attempt using a function*
+**and**
+**400** *for every unsucessfull attempt using a function*
 
 
-Important Code Block:
-
-```python
-    def checkIfNegetiveAddition(AccountID:str, Amount:int):
-        with open(BANK, "r") as file:
-            thebank = json.load(file)
-        ExistingBalace=thebank[str(AccountID)][0]["Balance"]
-        if ExistingBalace+Amount < 0:
-            return "NOT OK"
-        if ExistingBalace+Amount == 0:
-            return 0
-        if ExistingBalace+Amount > 0:
-            return "OK"
-    def checkIfNegetiveBalanceWithdrawl(AccountID:str, Amount:int):
-        with open(BANK, "r") as file:
-            thebank = json.load(file)
-        ExistingBalace=thebank[str(AccountID)][0]["Balance"]
-        if ExistingBalace-Amount < 0:
-            return "NOT OK"
-        if ExistingBalace-Amount == 0:
-            return 0
-        if ExistingBalace-Amount > 0:
-            return "OK"
-```
 Some Upcoming Features and already added features:
 
->Account creation: The ability to create new bank accounts, including setting an account name, ID, and initial balance.
+>Account creation: The ability to create new bank accounts, including setting an account name, ID, and initial balance. **done**
+>Account balance: The ability to check the current balance of an account. **done**
+>Deposits and withdrawals: The ability to deposit and withdraw money from an account.  **done**
+>Transfer money: The ability to transfer money between accounts.  **done**
+>Transactions history: The ability to view a list of past transactions for an account, including deposits, withdrawals, and transfers.  **In Future**
+>Interest and Fees: Ability to add interest and fees to an account. **Can be done using the bot, and scheduler**
+>Multi-user support: The ability to handle multiple users and accounts at the same time.**done**
+>Authentication: Implementing a secure way of authenticating users and their accounts. **In Future !**
+>Error Handling: Handling exceptions and errors when invalid inputs are given or when an account does not have enough funds for a withdrawal. **done**
+>Reports: Generating reports on account balances, transactions and other banking activities. **Can be done using the bot, and scheduler using dict handlers**
 
->Account balance: The ability to check the current balance of an account.
 
->Deposits and withdrawals: The ability to deposit and withdraw money from an account.
-
->Transfer money: The ability to transfer money between accounts.
-
->Transactions history: The ability to view a list of past transactions for an account, including deposits, withdrawals, and transfers.
-
->Interest and Fees: Ability to add interest and fees to an account.
-
->Multi-user support: The ability to handle multiple users and accounts at the same time.
-
->Authentication: Implementing a secure way of authenticating users and their accounts.
-
->Error Handling: Handling exceptions and errors when invalid inputs are given or when an account does not have enough funds for a withdrawal.
-
->Reports: Generating reports on account balances, transactions and other banking activities.
