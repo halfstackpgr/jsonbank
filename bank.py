@@ -25,7 +25,7 @@ def CreateAccount(
     
     """
     Source:
-    
+
     CheckingAccountExistence=Check.AccountExistence(AccountID=AccountID)
     if CheckingAccountExistence['result']=='Fail':
         CheckingPoolingData=Check.AccountCreationPooling(Amount=Balance)

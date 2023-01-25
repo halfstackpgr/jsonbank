@@ -45,3 +45,8 @@ Some Upcoming Features and already added features:
 >Error Handling: Handling exceptions and errors when invalid inputs are given or when an account does not have enough funds for a withdrawal. **done**
 
 >Reports: Generating reports on account balances, transactions and other banking activities. **Can be done using the bot, and scheduler using dict handlers**
+
+
+
+<h1>How To Use</h1>
+
