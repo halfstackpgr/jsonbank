@@ -475,7 +475,38 @@ class GetBank:
         } 
 
 class ChangeUser:
+    """
+    A class for updating the user details in the bank's database. 
+    The class contains several methods for updating different aspects of the user's account such as the name, branch name, branch id, and about section.
+    Before updating the user's details, the class checks if the provided account id exists in the bank's database.
+    If the account id is not found, the request will return 'Account Not Found' and a result code of 400.
+    If the account id is found and the update is successful, the request will return the original value and the new value, a result code of 200 and a comment 'Request was successful'
+    
+    Methods:
+        
+        - name(AccountID:str, NewName:str)
+        
+        - branchname(AccountID:str, NewBranch:str)
+        
+        - branchid(AccountID:str, NewBranchID:str)
+        
+        - about(AccountID:str, NewAbout:str)
+    """
     def name(AccountID:str, NewName:str):
+        """
+        Change the name of an account holder.
+        
+        Parameters:
+            AccountID (str): Account ID of the account holder.
+            NewName (str): New name of the account holder.
+        
+        Returns:
+            dict:
+                'was': Old name of the account holder
+                'new': New name of the account holder
+                'result': 200 if the request was successful, 400 otherwise
+                'comment': Message indicating the status of the request.
+        """
         AccountExistenceCheck=Check.AccountExistence(AccountID=AccountID)
         if AccountExistenceCheck['result']=='Pass':
             Change=UpdateUser.name(AccountID=AccountID, NewName=NewName)
@@ -492,6 +523,20 @@ class ChangeUser:
                 'comment':'Account Not Found!'
             }
     def branchname(AccountID:str, NewBranch:str):
+        """
+        Change the branch name of an account holder.
+        
+        Parameters:
+            AccountID (str): Account ID of the account holder.
+            NewBranch (str): New branch name of the account holder.
+        
+        Returns:
+            dict:
+                'was': Old branch name of the account holder
+                'new': New branch name of the account holder
+                'result': 200 if the request was successful, 400 otherwise
+                'comment': Message indicating the status of the request.
+        """
         AccountExistenceCheck=Check.AccountExistence(AccountID=AccountID)
         if AccountExistenceCheck['result']=='Pass':
             Change=UpdateUser.branchname(AccountID=AccountID, NewBranch=NewBranch)
@@ -507,6 +552,20 @@ class ChangeUser:
                 'comment':'Account Not Found!'
             }
     def branchid(AccountID:str, NewBranchID:str):
+        """
+        Change the branch ID of an account holder.
+        
+        Parameters:
+            AccountID (str): Account ID of the account holder.
+            NewBranchID (str): New branch ID of the account holder.
+        
+        Returns:
+            dict:
+                'was': Old branch ID of the account holder
+                'new': New branch ID of the account holder
+                'result': 200 if the request was successful, 400 otherwise
+                'comment': Message indicating the status of the request.
+        """
         AccountExistenceCheck=Check.AccountExistence(AccountID=AccountID)
         if AccountExistenceCheck['result']=='Pass':
             Change=UpdateUser.branchid(AccountID=AccountID, NewBranchID=NewBranchID)
@@ -522,6 +581,20 @@ class ChangeUser:
                 'comment':'Account Not Found!'
             }
     def about(AccountID:str, NewAbout:str):
+        """
+        Change the branch ID of an account holder.
+        
+        Parameters:
+            AccountID (str): Account ID of the account holder.
+            NewBranchID (str): New branch ID of the account holder.
+        
+        Returns:
+            dict:
+                'was': Old branch ID of the account holder
+                'new': New branch ID of the account holder
+                'result': 200 if the request was successful, 400 otherwise
+                'comment': Message indicating the status of the request.
+        """
         AccountExistenceCheck=Check.AccountExistence(AccountID=AccountID)
         if AccountExistenceCheck['result']=='Pass':
             Change=UpdateUser.about(AccountID=AccountID, NewAbout=NewAbout)
