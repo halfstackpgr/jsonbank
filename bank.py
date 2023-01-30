@@ -508,13 +508,17 @@ class GetBank:
         return{
             'balance': Converters.StandardFormat(int(SumUp)),
             'balanceinwords': Converters.NumberToWords(int(SumUp))
+            "comment":f"The Net Balance flowing in the bank is: {Converters.NumberToWords(int(SumUp))}",
+            "result": 200
         }
         ```
         """
         SumUp=BankGet.Balance()['balance']
         return{
             'balance': Converters.StandardFormat(int(SumUp)),
-            'balanceinwords': Converters.NumberToWords(int(SumUp))
+            'balanceinwords': Converters.NumberToWords(int(SumUp)),
+            "comment":f"The Net Balance flowing in the bank is: {Converters.NumberToWords(int(SumUp))}",
+            "result": 200
         }
     def NumOfAccounts():
 
@@ -527,6 +531,8 @@ class GetBank:
         return{
             'accounts': Converters.StandardFormat(int(Num)),
             'accountsinwords': Converters.NumberToWords(int(Num))
+            "comment":f"The Total Number Of Accounts in the bank are: {Converters.NumberToWords(int(Num))}",
+            "result": 200
         }
         ```
         """
@@ -535,7 +541,9 @@ class GetBank:
         Num=BankGet.Accounts()['accounts']
         return{
             'accounts': Converters.StandardFormat(int(Num)),
-            'accountsinwords': Converters.NumberToWords(int(Num))
+            'accountsinwords': Converters.NumberToWords(int(Num)),
+            "comment":f"The Total Number Of Accounts in the bank are: {Converters.NumberToWords(int(Num))}",
+            "result": 200
         }
     def Pool():
         
@@ -548,6 +556,8 @@ class GetBank:
         return{
             'maxpool': Converters.StandardFormat(int(PoolNum)),
             'maxpoolinwords': Converters.NumberToWords(int(PoolNum))
+            "comment":f"The maximum amount that can flow into accounts: {Converters.NumberToWords(int(PoolNum))}",
+            "result": 200
         }
         ```
         """
@@ -556,7 +566,9 @@ class GetBank:
         PoolNum=BankGet.Pool()['balance']
         return{
             'maxpool': Converters.StandardFormat(int(PoolNum)),
-            'maxpoolinwords': Converters.NumberToWords(int(PoolNum))
+            'maxpoolinwords': Converters.NumberToWords(int(PoolNum)),
+            "comment":f"The maximum amount that can flow into accounts: {Converters.NumberToWords(int(PoolNum))}",
+            "result": 200
         }
     def RemainingPool():
         
@@ -577,7 +589,9 @@ class GetBank:
         RemainingPool=BankGet.RemainingPool()['leftpool']
         return{
             'maxpool': Converters.StandardFormat(int(RemainingPool)),
-            'maxpoolinwords': Converters.NumberToWords(int(RemainingPool))
+            'maxpoolinwords': Converters.NumberToWords(int(RemainingPool)),
+            "comment":f"The maximum amount that can flow into accounts as of now : {Converters.NumberToWords(int(RemainingPool))}",
+            "result": 200
         } 
 
 class ChangeUser:
