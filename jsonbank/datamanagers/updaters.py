@@ -245,3 +245,16 @@ class UpdateUser:
                 "result": 200,
                 "comment": "Account has been deleted successfully !"
             }
+    
+    
+class UpdateBank:   
+    def pool(NewAmount:int):
+        with open(POOLING, "r") as file:
+            POOLINGDATA = json.load(file)
+            POOLINGDATA["maximum"] = NewAmount
+            with open(POOLING, "w") as file:
+                json.dump(POOLINGDATA, file, indent=2)
+            return {
+                "result": 200,
+                "comment": f"New Amount Of {NewAmount} has been added to the bank!"
+            }

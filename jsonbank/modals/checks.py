@@ -325,7 +325,7 @@ class Check:
                     if ToMoneyCheck['result']=='Pass':
                         return {
                             'comment': "Transfer Can Be Granted. Passed All the Checks !",
-                            'reason': "Transfer Protocol Passed all the possible checks !s",
+                            'reason': "Transfer Protocol Passed all the possible checks !",
                             'result':'Pass'
                         }
                     if ToMoneyCheck['result']=='Fail':

@@ -2,7 +2,7 @@ import json
 
 from .datamanagers.get import UserGet, BankGet
 from .datamanagers.converters import Converters, AllResults
-from .datamanagers.updaters import Update, UpdateUser
+from .datamanagers.updaters import Update, UpdateUser, UpdateBank
 from .modals.checks import Check
 from .modals.pricepool import PricePool
 import sys
@@ -200,6 +200,55 @@ def Transfer(fromID:str, toID:str, Amount:int):
             'reason': str(TransferCheck['reason'])
         }
 
+
+
+def TransferAccount(fromID:str, toID:str):
+    """
+    Source:
+    
+    ```python
+    Transfer(fromID:str, toID:str)->dict
+    ```
+    
+    This function is used to transfer one account to another account.
+
+    The function first performs a check using Check.TransferCheck(fromID, toID) to verify that the transfer operation is valid. If the check passes, the function calls Update.transfer(fromID, toID, Amount) to transfer the money.
+
+    The function returns a dictionary with keys 'comment', 'result', and 'reason'. The 'comment' key holds a string describing the outcome of the operation, the 'result' key holds an integer indicating the status of the operation, and the 'reason' key holds a string with the reason for the outcome.
+    
+    Either `200` for success or `400` for failure.
+    """
+    FromIDCheck=Check.AccountExistence(AccountID=fromID)
+    if FromIDCheck['result']=='Pass':
+        Amount=UserGet.UserBalance(AccountID=fromID)['balance']
+        TransferCheck=Check.TransferCheck(fromID=fromID, toID=toID, Amount=Amount)
+        if TransferCheck['result']=='Pass':
+            Update.transfer(fromID=fromID, toID=toID, Amount=Amount)
+            UpdateUser.deleteAccount(AccountID=fromID)
+            return{
+                'comment': "Amount has been successfully transferred ! And the Account was transferred !",
+                'result': 200,
+                'reason': str(TransferCheck['reason'])
+            }
+        if TransferCheck['result']=='Fail':
+            return{
+                'comment': "Account Could Not Be transfered !",
+                'result': 400,
+                'reason': str(TransferCheck['reason'])
+            }
+        else:
+            return{
+                'comment': "Unknown Error While Processing Request!",
+                'result': 400,
+                'reason': str(TransferCheck['reason'])
+            }
+    if FromIDCheck['result']=='Fail':
+        return{
+            'comment': "The Account You Are Trying To Transfer Does Not Exists!",
+            'result': 400,
+            'reason': str(FromIDCheck['comment'])
+        }
+        
 class GetUser:
     def balance(AccountID:str): 
         """
@@ -609,3 +658,25 @@ class ChangeUser:
                 'result':400,
                 'comment':'Account Not Found!'
             }
+class Pool:
+    def reset():
+        WasPP=PricePool.check()['balance']
+        UpdateBank.pool(0)
+        return {
+            'was': WasPP,
+            'new': 0,
+            'result': 200,
+            'comment':'Pool Has Been Reduced to 0, Reset Sucessfull!'
+        }
+    def update(NewAmount:int):
+        WasPP=PricePool.check()['balance']
+        UpdateBank.pool(0)
+        return {
+            'was': WasPP,
+            'new': 0,
+            'result': 200,
+            'comment':'Pool Has Been Reduced to 0, Reset Sucessfull!'
+        }    
+
+
+        
