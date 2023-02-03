@@ -1,5 +1,7 @@
 import json
+from jsonbank.datamanagers.get import BankGet
 from .pricepool import PricePool
+
 # Limits
 MaxLowerLimitVaule=0
 # PATHS:
@@ -400,6 +402,38 @@ class Check:
         if CheckingAmount==0:
             return {
                 "comment":"Balance can't be Added. Price Pool Turns 0",
+                "result": "Fail"
+            }
+        else:
+            return {
+                "comment": "An error occured.",
+                'result': "Error"
+            }
+
+
+    def PoolReduce(Amount:int):
+        LastAmount=int(PricePool.check()['balance'])
+        NewAmount=LastAmount-Amount
+        AlreadyFloating=BankGet.Balance()['balance']-NewAmount
+        if NewAmount > 0:
+            if AlreadyFloating > NewAmount or AlreadyFloating==NewAmount:
+                return {
+                    "comment":"Amount can be reduced from the Pool !",
+                    "result": "Pass"
+                }
+            else:
+                return {
+                    "comment":"The Floating balance in bank doesn't comply with the given amount to be reduced!",
+                    "result": "Fail"
+                }    
+        if NewAmount < 0:
+            return {
+                "comment":"Amount goes negative with respect to Pool. Cant be reduced !",
+                "result": "Fail"
+            }
+        if NewAmount==0:
+            return {
+                "comment":"Pool Cant be 0",
                 "result": "Fail"
             }
         else:

@@ -677,6 +677,21 @@ class Pool:
             'result': 200,
             'comment':'Pool Has Been Reduced to 0, Reset Sucessfull!'
         }    
-
-
-        
+    def reduce(NewAmount:int):
+        WasPP=PricePool.check()['balance']
+        PricePoolCheckComment=Check.PoolReduce(NewAmount)['comment']
+        PricePoolCheckResult=Check.PoolReduce(NewAmount)['result']
+        if PricePoolCheckResult=='Pass':
+            UpdateBank.pool(WasPP-NewAmount)
+            LatestAmount=WasPP-NewAmount
+            return {
+                'was': WasPP,
+                'new': WasPP-NewAmount,
+                'result': 200,
+                'comment':f'Pool Has Been Reduced to {LatestAmount}, Reset Sucessfull!'
+            }
+        if PricePoolCheckResult=='Fail':
+            return {
+                'result': 200,
+                'comment':f'Reset unsucessfull! Because {PricePoolCheckComment}'
+            }
